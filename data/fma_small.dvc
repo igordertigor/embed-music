@@ -1,0 +1,5 @@
+outs:
+- md5: 572ddb300c2bf3bd3076ffbd731b4cb9.dir
+  size: 7975472258
+  nfiles: 8002
+  path: fma_small
