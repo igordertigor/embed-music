@@ -1,0 +1,9 @@
+stages:
+  filter-tracklist:
+    cmd: python src/filter_tracklist.py
+    deps:
+    - data/fma_metadata/
+    - data/fma_small
+    - src/filter_tracklist.py
+    outs:
+    - out/tracks_small.csv

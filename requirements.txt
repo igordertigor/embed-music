@@ -1,5 +1,7 @@
 numpy
 scipy
 torch
+sklearn
+pandas
 torchaudio
 dvc

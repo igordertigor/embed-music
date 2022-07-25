@@ -1,0 +1,20 @@
+schema: '2.0'
+stages:
+  filter-tracklist:
+    cmd: python src/filter_tracklist.py
+    deps:
+    - path: data/fma_metadata/
+      md5: 8f6b6fdb905c130601c842a519e2d694.dir
+      size: 1464836461
+      nfiles: 12
+    - path: data/fma_small
+      md5: 572ddb300c2bf3bd3076ffbd731b4cb9.dir
+      size: 7975472258
+      nfiles: 8002
+    - path: src/filter_tracklist.py
+      md5: cea3ecb13472b691d9ab24867b8c5a6a
+      size: 443
+    outs:
+    - path: out/tracks_small.csv
+      md5: 9228193916dd0682748e41d660dfba6e
+      size: 1634468
