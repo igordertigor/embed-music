@@ -31,6 +31,10 @@ stages:
     - path: src/clean_up_genre.py
       md5: 2b0c375ab65232442e35a1eaf9e0dc6d
       size: 1018
+    outs:
+    - path: out/clean_tracks_small.csv
+      md5: 00b3c727ca76bb816d56d51b5edb2327
+      size: 231559
   split-data:
     cmd: python src/split_data.py
     deps:
