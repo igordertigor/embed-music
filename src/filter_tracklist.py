@@ -12,4 +12,4 @@ def has_audio(track_id: int) -> bool:
 
 
 tracks_small = tracks[tracks['track_id'].apply(has_audio)]
-tracks_small.to_csv('out/tracks_small.csv')
+tracks_small.to_csv('out/tracks_small.csv', index=False)

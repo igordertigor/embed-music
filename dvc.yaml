@@ -7,3 +7,8 @@ stages:
     - src/filter_tracklist.py
     outs:
     - out/tracks_small.csv
+  clean-up-tracklist:
+    cmd: python src/clean_up_genre.py
+    deps:
+    - out/tracks_small.csv
+    - src/clean_up_genre.py

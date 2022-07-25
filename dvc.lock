@@ -18,3 +18,12 @@ stages:
     - path: out/tracks_small.csv
       md5: 9228193916dd0682748e41d660dfba6e
       size: 1634468
+  clean-up-tracklist:
+    cmd: python src/clean_up_genre.py
+    deps:
+    - path: out/tracks_small.csv
+      md5: 9228193916dd0682748e41d660dfba6e
+      size: 1634468
+    - path: src/clean_up_genre.py
+      md5: 2b0c375ab65232442e35a1eaf9e0dc6d
+      size: 1018
