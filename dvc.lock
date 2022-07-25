@@ -21,6 +21,10 @@ stages:
   clean-up-tracklist:
     cmd: python src/clean_up_genre.py
     deps:
+    - path: data/fma_metadata/
+      md5: 8f6b6fdb905c130601c842a519e2d694.dir
+      size: 1464836461
+      nfiles: 12
     - path: out/tracks_small.csv
       md5: 32a23444b5cf0f26a2066029565e9b96
       size: 1586807

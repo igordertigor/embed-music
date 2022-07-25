@@ -11,4 +11,5 @@ stages:
     cmd: python src/clean_up_genre.py
     deps:
     - out/tracks_small.csv
+    - data/fma_metadata/
     - src/clean_up_genre.py
