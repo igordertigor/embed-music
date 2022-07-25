@@ -12,18 +12,18 @@ stages:
       size: 7975472258
       nfiles: 8002
     - path: src/filter_tracklist.py
-      md5: cea3ecb13472b691d9ab24867b8c5a6a
-      size: 443
+      md5: 2c01ede839363f3337eee7e26a76f2b1
+      size: 456
     outs:
     - path: out/tracks_small.csv
-      md5: 9228193916dd0682748e41d660dfba6e
-      size: 1634468
+      md5: 32a23444b5cf0f26a2066029565e9b96
+      size: 1586807
   clean-up-tracklist:
     cmd: python src/clean_up_genre.py
     deps:
     - path: out/tracks_small.csv
-      md5: 9228193916dd0682748e41d660dfba6e
-      size: 1634468
+      md5: 32a23444b5cf0f26a2066029565e9b96
+      size: 1586807
     - path: src/clean_up_genre.py
       md5: 2b0c375ab65232442e35a1eaf9e0dc6d
       size: 1018
