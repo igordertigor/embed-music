@@ -31,3 +31,22 @@ stages:
     - path: src/clean_up_genre.py
       md5: 2b0c375ab65232442e35a1eaf9e0dc6d
       size: 1018
+  split-data:
+    cmd: python src/split_data.py
+    deps:
+    - path: out/clean_tracks_small.csv
+      md5: 00b3c727ca76bb816d56d51b5edb2327
+      size: 231559
+    - path: src/split_data.py
+      md5: 9f8569d0e47f960227665748242f7573
+      size: 472
+    outs:
+    - path: out/testing_set.csv
+      md5: 165208568adfb016d4a6e3619517933b
+      size: 2292
+    - path: out/training_set.csv
+      md5: 0803d9fe75aa08c0547b32856c382068
+      size: 222054
+    - path: out/validation_set.csv
+      md5: 321da580719db96b915c6fc2fb32b5aa
+      size: 2306

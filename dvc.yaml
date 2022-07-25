@@ -13,3 +13,14 @@ stages:
     - out/tracks_small.csv
     - data/fma_metadata/
     - src/clean_up_genre.py
+    outs:
+    - out/clean_tracks_small.csv
+  split-data:
+    cmd: python src/split_data.py
+    deps:
+    - out/clean_tracks_small.csv
+    - src/split_data.py
+    outs:
+    - out/testing_set.csv
+    - out/training_set.csv
+    - out/validation_set.csv
