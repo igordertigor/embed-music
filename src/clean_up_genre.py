@@ -28,6 +28,8 @@ for i, t in tracks.iterrows():
     tracks.loc[i, 'genre_title'] = name_lookup[genre_top]
 
 tracks['track_id'] = tracks['track_id'].apply(lambda x: str(x).zfill(6))
+tracks['album_id'] = tracks['album_id'].apply(int)
+tracks['genre_top'] = tracks['genre_top'].apply(int)
 
 tracks[['track_id', 'album_id', 'genre_top', 'genre_title']].to_csv(
     'out/clean_tracks_small.csv',

@@ -29,28 +29,28 @@ stages:
       md5: 32a23444b5cf0f26a2066029565e9b96
       size: 1586807
     - path: src/clean_up_genre.py
-      md5: 2b0c375ab65232442e35a1eaf9e0dc6d
-      size: 1018
+      md5: 4bd631ed5e6d76b6cf5200d2b7e95dba
+      size: 1122
     outs:
     - path: out/clean_tracks_small.csv
-      md5: 00b3c727ca76bb816d56d51b5edb2327
-      size: 231559
+      md5: 6f8cec6b46c5484d58878fec8ff0d68f
+      size: 199559
   split-data:
     cmd: python src/split_data.py
     deps:
     - path: out/clean_tracks_small.csv
-      md5: 00b3c727ca76bb816d56d51b5edb2327
-      size: 231559
+      md5: 6f8cec6b46c5484d58878fec8ff0d68f
+      size: 199559
     - path: src/split_data.py
-      md5: 9f8569d0e47f960227665748242f7573
-      size: 472
+      md5: a8c86c29d91b84c9da0ea436f94a0aca
+      size: 637
     outs:
     - path: out/testing_set.csv
-      md5: 165208568adfb016d4a6e3619517933b
-      size: 2292
+      md5: 97b999e0d17ea973c74a334f66bcb53a
+      size: 2038
     - path: out/training_set.csv
-      md5: 0803d9fe75aa08c0547b32856c382068
-      size: 222054
+      md5: fa6262ebfc2267dcb4a3ce93117b56e7
+      size: 195564
     - path: out/validation_set.csv
-      md5: 321da580719db96b915c6fc2fb32b5aa
-      size: 2306
+      md5: ae89bd8206b8badcf29eb7d06c1efc1d
+      size: 2037
