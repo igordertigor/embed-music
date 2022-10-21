@@ -1,5 +1,6 @@
 import torch
 from torch import nn
+from torch import optim
 import pytorch_lightning as pl
 
 
@@ -53,8 +54,13 @@ class SoundnetGenreClassifier(pl.LightningModule):
         loss = nn.functional.cross_entropy(y, genres)
         return loss
 
+    def configure_optimizers(self):
+        optimizer = optim.Adam(self.parameters(), lr=1e-4)
+        return optimizer
+
 
 if __name__ == '__main__':
     model = SoundnetGenreClassifier()
     d = torch.randn(4, 1, 30000)
-    print(model.soundnet(d).size())
+    h = model.soundnet(d)
+    print(model.decoder(h.view(h.size(0), -1)))
