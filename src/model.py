@@ -44,7 +44,7 @@ class SoundnetGenreClassifier(pl.LightningModule):
             nn.Linear(512, 128),
             nn.ReLU(),
             nn.Linear(128, 8),
-            nn.LogSoftmax(),
+            nn.LogSoftmax(dim=-1),
         )
 
     def training_step(self, batch, batch_idx):
