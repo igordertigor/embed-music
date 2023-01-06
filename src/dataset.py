@@ -48,11 +48,15 @@ class FMA(Dataset):
         track = str(int(record['track_id'])).zfill(6)
         filename = os.path.join(self.datadir, track[:3], f'{track}.mp3')
 
-        audio, sampling_rate = torchaudio.load(
-            filename,
-            frame_offset=44100*offset,
-            num_frames=int(44100*3.75),
-        )
+        try:
+            audio, sampling_rate = torchaudio.load(
+                filename,
+                frame_offset=44100*offset,
+                num_frames=int(44100*3.75),
+            )
+        except Exception:
+            print('Failed to decode file', filename)
+            raise
         return genre_id, self.resampler(audio).mean(dim=0, keepdims=True)
 
 
