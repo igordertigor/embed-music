@@ -1,8 +1,8 @@
 import pandas as pd
 import ast
 
-tracks = pd.read_csv('out/tracks_small.csv')
-genres = pd.read_csv('data/fma_metadata/genres.csv')
+tracks = pd.read_csv('data/processed/tracks_small.csv')
+genres = pd.read_csv('data/raw/fma_metadata/genres.csv')
 
 genre_lookup = {}
 name_lookup = {}
@@ -32,6 +32,6 @@ tracks['album_id'] = tracks['album_id'].apply(int)
 tracks['genre_top'] = tracks['genre_top'].apply(int)
 
 tracks[['track_id', 'album_id', 'genre_top', 'genre_title']].to_csv(
-    'out/clean_tracks_small.csv',
+    'data/processed/clean_tracks_small.csv',
     index=False,
 )

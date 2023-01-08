@@ -23,7 +23,7 @@ class FMA(Dataset):
     index_csv: str
     datadir: str
 
-    def __init__(self, index_csv: str, datadir: str = 'data/fma_small'):
+    def __init__(self, index_csv: str, datadir: str = 'data/raw/fma_small'):
         self.index_csv = index_csv
         self.datadir = datadir
 
@@ -61,7 +61,7 @@ class FMA(Dataset):
 
 
 if __name__ == '__main__':
-    data = FMA('out/testing_set.csv')
+    data = FMA('data/processed/testing_set.csv')
 
     i, t = data[3]
     print(t.size())
