@@ -27,3 +27,17 @@ stages:
     - data/final/testing_set.csv
     - data/final/training_set.csv
     - data/final/validation_set.csv
+  train model:
+    cmd: python -m src.train
+    params:
+      - batch_size
+      - num_workers
+      - learning_rate
+      - limit_train_batches
+      - max_epochs
+    deps:
+      - src/train.py
+      - data/final/training_set.csv
+      - data/raw/fma_small/
+    outs:
+      - models/model.pt

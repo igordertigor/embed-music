@@ -1,2 +1,9 @@
 test_set_size: 0.1
 valid_set_size: 0.1
+
+batch_size: 16
+num_workers: 3
+learning_rate: 1e-5
+
+limit_train_batches: 20
+max_epochs: 1

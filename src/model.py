@@ -15,8 +15,12 @@ class PrintShape(nn.Module):
 
 
 class SoundnetGenreClassifier(pl.LightningModule):
-    def __init__(self):
+    learning_rate: float
+
+    def __init__(self, learning_rate: float = 1e-4):
         super().__init__()
+
+        self.learning_rate = learning_rate
 
         self.soundnet = nn.Sequential(
             nn.Conv1d(1, 16, kernel_size=64, stride=8),
@@ -55,7 +59,10 @@ class SoundnetGenreClassifier(pl.LightningModule):
         return loss
 
     def configure_optimizers(self):
-        optimizer = optim.Adam(self.parameters(), lr=1e-5)
+        optimizer = optim.Adam(
+            self.parameters(),
+            lr=self.learning_rate,
+        )
         return optimizer
 
 
