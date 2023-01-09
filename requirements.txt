@@ -1,8 +1,8 @@
 numpy
 scipy
 torch
-sklearn
-pandas
 torchaudio
+scikit-learn
+pandas
 dvc
 mlem

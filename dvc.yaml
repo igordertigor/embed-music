@@ -17,6 +17,9 @@ stages:
     - data/processed/clean_tracks_small.csv
   split-data:
     cmd: python src/split_data.py
+    params:
+      - test_set_size
+      - valid_set_size
     deps:
     - data/processed/clean_tracks_small.csv
     - src/split_data.py
