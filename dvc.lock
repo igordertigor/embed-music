@@ -72,8 +72,8 @@ stages:
       size: 7975472258
       nfiles: 8002
     - path: src/dataset.py
-      md5: db623ee33f2ba000842340300b9599fb
-      size: 1793
+      md5: dfce718ee0dac6f4ad5547f07ba81d07
+      size: 1748
     - path: src/model.py
       md5: 779aa696387158c9458d056815dcea62
       size: 2457
@@ -88,12 +88,12 @@ stages:
         num_workers: 3
     outs:
     - path: data/final/metrics.json
-      md5: 532b8edf24f08baf6a8d68769255fc57
-      size: 75
+      md5: eedc158ac7e37a046e5a83ad0beb1da4
+      size: 73
     - path: logs/training/version_0/
-      md5: 0e7d1e697c48601b89180be6d047329e.dir
-      size: 41566514
+      md5: d6a19b13d30a46fcd60af19a72d5c47c.dir
+      size: 41566541
       nfiles: 3
     - path: models/model.pt
-      md5: 84cad17cd9ebb50cb7f0b8c3d1d61e81
-      size: 42130187
+      md5: a907559fa6c2be7a858aaf579f983145
+      size: 42129419
