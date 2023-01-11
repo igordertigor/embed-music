@@ -1,6 +1,7 @@
 from typing import Optional
 from pydantic import BaseModel
 from yaml import safe_load
+import json
 import torch
 from torch.utils.data import DataLoader
 import pytorch_lightning as pl
@@ -14,7 +15,6 @@ from src.dataset import FMA
 class Config(BaseModel):
     batch_size: int = 16
     num_workers: int = 3
-    limit_train_batches: Optional[int]
     max_epochs: Optional[int]
     learning_rate: float = 1e-4
 
@@ -24,18 +24,44 @@ if __name__ == '__main__':
         config = Config(**safe_load(f))
 
     model = SoundnetGenreClassifier(config.learning_rate)
-    dataset = FMA('data/final/training_set.csv')
-    dl = DataLoader(
-        dataset,
+    dl_train = DataLoader(
+        FMA('data/final/training_set.csv'),
         batch_size=config.batch_size,
         num_workers=config.num_workers,
     )
-    trainer = pl.Trainer(
-        limit_train_batches=config.limit_train_batches,
-        max_epochs=config.max_epochs,
+    dl_val = DataLoader(
+        FMA('data/final/validation_set.csv'),
+        batch_size=config.batch_size,
+        num_workers=config.num_workers,
     )
-    trainer.fit(model=model, train_dataloaders=dl)
+
+    trainer = pl.Trainer(
+        limit_train_batches=20,
+        limit_val_batches=10,
+        max_epochs=config.max_epochs,
+        log_every_n_steps=5,
+        logger=pl.loggers.CSVLogger('logs', name='training'),
+    )
+    trainer.fit(
+        model=model,
+        train_dataloaders=dl_train,
+        val_dataloaders=dl_val,
+    )
 
     torch.save(model, 'models/model.pt')
+
+    logger, = [
+        log
+        for log in trainer.loggers
+        if isinstance(log, pl.loggers.CSVLogger)
+    ]
+
+    best_record = {'val_loss': 1e10}
+    for record in logger.experiment.metrics:
+        if record['val_loss'] < best_record['val_loss']:
+            best_record = record
+    with open('data/final/metrics.json', 'w') as f:
+        json.dump(best_record, f)
+    print(best_record)
 
     # mlem.api.save(model, 'sound-genre-classifier')

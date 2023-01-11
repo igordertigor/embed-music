@@ -33,11 +33,16 @@ stages:
       - batch_size
       - num_workers
       - learning_rate
-      - limit_train_batches
       - max_epochs
     deps:
       - src/train.py
+      - src/model.py
+      - src/dataset.py
       - data/final/training_set.csv
+      - data/final/validation_set.csv
       - data/raw/fma_small/
     outs:
       - models/model.pt
+      - logs/training/version_0/
+    metrics:
+      - data/final/metrics.json

@@ -58,6 +58,17 @@ class SoundnetGenreClassifier(pl.LightningModule):
         loss = nn.functional.cross_entropy(y, genres)
         return loss
 
+    def validation_step(self, batch, batch_idx):
+        genres, audio = batch
+        h = self.soundnet(audio)
+        y = self.decoder(h.view(h.size(0), -1))
+        loss = nn.functional.cross_entropy(y, genres)
+        self.log('val_loss', loss)
+
+        pred = y.max(1)
+        accuracy = (pred.indices == genres).float().mean()
+        self.log('accuracy', accuracy)
+
     def configure_optimizers(self):
         optimizer = optim.Adam(
             self.parameters(),

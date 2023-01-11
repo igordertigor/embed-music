@@ -64,21 +64,36 @@ stages:
     - path: data/final/training_set.csv
       md5: 0c215ca6ccb1b060e83d19e8e9dc6146
       size: 150500
+    - path: data/final/validation_set.csv
+      md5: 18cee0027ae94af8534dea986e75e506
+      size: 18860
     - path: data/raw/fma_small/
       md5: 572ddb300c2bf3bd3076ffbd731b4cb9.dir
       size: 7975472258
       nfiles: 8002
+    - path: src/dataset.py
+      md5: db623ee33f2ba000842340300b9599fb
+      size: 1793
+    - path: src/model.py
+      md5: 779aa696387158c9458d056815dcea62
+      size: 2457
     - path: src/train.py
-      md5: c41d002045d4aca3e05b56848b501a76
-      size: 1045
+      md5: 54a1e6caf7c780c33efa03de6c74e3ff
+      size: 1717
     params:
       params.yaml:
         batch_size: 16
         learning_rate: 1e-05
-        limit_train_batches: 20
-        max_epochs: 1
+        max_epochs: 2
         num_workers: 3
     outs:
+    - path: data/final/metrics.json
+      md5: 532b8edf24f08baf6a8d68769255fc57
+      size: 75
+    - path: logs/training/version_0/
+      md5: 0e7d1e697c48601b89180be6d047329e.dir
+      size: 41566514
+      nfiles: 3
     - path: models/model.pt
-      md5: a9460b2f338699684f19c80f5d6f056d
-      size: 41936620
+      md5: 84cad17cd9ebb50cb7f0b8c3d1d61e81
+      size: 42130187
