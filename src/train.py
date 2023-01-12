@@ -1,10 +1,9 @@
 from typing import Optional
 from pydantic import BaseModel
 from yaml import safe_load
-import json
-import torch
 from torch.utils.data import DataLoader
 import pytorch_lightning as pl
+from dvclive.lightning import DVCLiveLogger
 
 # import mlem
 
@@ -35,12 +34,22 @@ if __name__ == '__main__':
         num_workers=config.num_workers,
     )
 
+    checkpoints = pl.callbacks.ModelCheckpoint(
+        monitor='val_loss',
+        dirpath='experiments/training/checkpoints',
+        save_last=True,
+        every_n_epochs=1,
+    )
     trainer = pl.Trainer(
         limit_train_batches=20,
         limit_val_batches=10,
         max_epochs=config.max_epochs,
         log_every_n_steps=5,
-        logger=pl.loggers.CSVLogger('logs', name='training'),
+        callbacks=[checkpoints],
+        logger=DVCLiveLogger(
+            'experiments/training',
+            dir='experiments/training',
+        )
     )
     trainer.fit(
         model=model,
@@ -48,20 +57,21 @@ if __name__ == '__main__':
         val_dataloaders=dl_val,
     )
 
-    torch.save(model, 'models/model.pt')
+    # print(model)
+    # torch.save(model, 'models/model.pt')
 
-    logger, = [
-        log
-        for log in trainer.loggers
-        if isinstance(log, pl.loggers.CSVLogger)
-    ]
+    # logger, = [
+    #     log
+    #     for log in trainer.loggers
+    #     if isinstance(log, pl.loggers.CSVLogger)
+    # ]
 
-    best_record = {'val_loss': 1e10}
-    for record in logger.experiment.metrics:
-        if record['val_loss'] < best_record['val_loss']:
-            best_record = record
-    with open('data/final/metrics.json', 'w') as f:
-        json.dump(best_record, f)
-    print(best_record)
+    # best_record = {'val_loss': 1e10}
+    # for record in logger.experiment.metrics:
+    #     if record['val_loss'] < best_record['val_loss']:
+    #         best_record = record
+    # with open('data/final/metrics.json', 'w') as f:
+    #     json.dump(best_record, f)
+    # print(best_record)
 
     # mlem.api.save(model, 'sound-genre-classifier')
