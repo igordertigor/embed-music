@@ -42,7 +42,8 @@ stages:
       - data/final/validation_set.csv
       - data/raw/fma_small/
     outs:
-      - models/model.pt
-      - logs/training/version_0/
+      - experiments/training/checkpoints
     metrics:
-      - data/final/metrics.json
+      - experiments/training/metrics.json
+    plots:
+      - experiments/training/plots
