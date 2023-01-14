@@ -4,6 +4,7 @@ from yaml import safe_load
 from torch.utils.data import DataLoader
 import pytorch_lightning as pl
 from dvclive.lightning import DVCLiveLogger
+import time
 
 # import mlem
 
@@ -51,11 +52,13 @@ if __name__ == '__main__':
             dir='experiments/training',
         )
     )
+    t0 = time.time()
     trainer.fit(
         model=model,
         train_dataloaders=dl_train,
         val_dataloaders=dl_val,
     )
+    print(time.time() - t0)
 
     # print(model)
     # torch.save(model, 'models/model.pt')
