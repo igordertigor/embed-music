@@ -15,7 +15,7 @@ from src.dataset import FMA
 class Config(BaseModel):
     batch_size: int = 16
     num_workers: int = 3
-    max_epochs: Optional[int]
+    max_epochs: int = -1
     learning_rate: float = 1e-4
 
 
@@ -28,11 +28,13 @@ if __name__ == '__main__':
         FMA('data/final/training_set.csv'),
         batch_size=config.batch_size,
         num_workers=config.num_workers,
+        pin_memory=True,
     )
     dl_val = DataLoader(
         FMA('data/final/validation_set.csv'),
         batch_size=config.batch_size,
         num_workers=config.num_workers,
+        pin_memory=True,
     )
 
     checkpoints = pl.callbacks.ModelCheckpoint(
@@ -42,10 +44,8 @@ if __name__ == '__main__':
         every_n_epochs=1,
     )
     trainer = pl.Trainer(
-        limit_train_batches=20,
-        limit_val_batches=10,
+        accelerator='auto',
         max_epochs=config.max_epochs,
-        log_every_n_steps=5,
         callbacks=[checkpoints],
         logger=DVCLiveLogger(
             'experiments/training',
@@ -58,7 +58,7 @@ if __name__ == '__main__':
         train_dataloaders=dl_train,
         val_dataloaders=dl_val,
     )
-    print(time.time() - t0)
+    print('Total training time', time.time() - t0)
 
     # print(model)
     # torch.save(model, 'models/model.pt')
