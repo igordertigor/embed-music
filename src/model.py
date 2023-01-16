@@ -16,11 +16,15 @@ class PrintShape(nn.Module):
 
 class SoundnetGenreClassifier(pl.LightningModule):
     learning_rate: float
+    best_accuracy: float
+    best_loss: float
 
     def __init__(self, learning_rate: float = 1e-4):
         super().__init__()
 
         self.learning_rate = learning_rate
+        self.best_loss = 0.
+        self.best_loss = float('inf')
 
         self.soundnet = nn.Sequential(
             nn.Conv1d(1, 16, kernel_size=64, stride=8),
@@ -63,11 +67,15 @@ class SoundnetGenreClassifier(pl.LightningModule):
         h = self.soundnet(audio)
         y = self.decoder(h.view(h.size(0), -1))
         loss = nn.functional.cross_entropy(y, genres)
+        self.best_loss = min(self.best_loss, loss.item())
         self.log('val_loss', loss)
+        self.log('best_loss', self.best_loss)
 
         pred = y.max(1)
         accuracy = (pred.indices == genres).float().mean()
+        self.best_accuracy = max(self.best_accuracy, accuracy)
         self.log('accuracy', accuracy)
+        self.log('best_accuracy', self.best_accuracy)
 
     def configure_optimizers(self):
         optimizer = optim.Adam(
