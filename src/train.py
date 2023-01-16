@@ -1,4 +1,3 @@
-from typing import Optional
 from pydantic import BaseModel
 from yaml import safe_load
 from torch.utils.data import DataLoader
@@ -43,10 +42,11 @@ if __name__ == '__main__':
         save_last=True,
         every_n_epochs=1,
     )
+    early_stopping = pl.callbacks.EarlyStopping('val_loss')
     trainer = pl.Trainer(
         accelerator='auto',
         max_epochs=config.max_epochs,
-        callbacks=[checkpoints],
+        callbacks=[checkpoints, early_stopping],
         logger=DVCLiveLogger(
             'experiments/training',
             dir='experiments/training',
