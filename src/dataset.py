@@ -18,6 +18,8 @@ class Genre(Enum):
     POP = 10
     ROCK = 12
 
+N_TRAINING_EXAMPLES_PER_TRACK: int = 20
+
 
 class FMA(Dataset):
     index_csv: str
@@ -38,11 +40,11 @@ class FMA(Dataset):
         )
 
     def __len__(self) -> int:
-        return 25*len(self._index)
+        return N_TRAINING_EXAMPLES_PER_TRACK*len(self._index)
 
     def __getitem__(self, i: int) -> Tuple[int, torch.FloatTensor]:
-        idx = i // 20
-        offset = i % 20
+        idx = i // N_TRAINING_EXAMPLES_PER_TRACK
+        offset = i % N_TRAINING_EXAMPLES_PER_TRACK
         record = self._index.iloc[idx]
         genre_id = self._genre_index[int(record['genre_top'])]
         track = str(int(record['track_id'])).zfill(6)
