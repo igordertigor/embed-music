@@ -18,13 +18,15 @@ class SoundnetGenreClassifier(pl.LightningModule):
     learning_rate: float
     best_accuracy: float
     best_loss: float
+    schedule_lr: bool
 
-    def __init__(self, learning_rate: float = 1e-4):
+    def __init__(self, learning_rate: float = 1e-4, schedule_lr: bool = False):
         super().__init__()
 
         self.learning_rate = learning_rate
         self.best_loss = 0.
         self.best_loss = float('inf')
+        self.schedule_lr = schedule_lr
 
         self.soundnet = nn.Sequential(
             nn.Conv1d(1, 16, kernel_size=64, stride=8),
@@ -82,14 +84,17 @@ class SoundnetGenreClassifier(pl.LightningModule):
             self.parameters(),
             lr=self.learning_rate,
         )
-        return {
-            'optimizer': optimizer,
-            'lr_scheduler': {
-                'scheduler': optim.lr_scheduler.ReduceLROnPlateau(optimizer),
-                'monitor': 'val_loss',
-                'frequency': 1,
-            },
-        }
+        if self.schedule_lr:
+            return {
+                'optimizer': optimizer,
+                'lr_scheduler': {
+                    'scheduler': optim.lr_scheduler.ReduceLROnPlateau(optimizer),
+                    'monitor': 'val_loss',
+                    'frequency': 1,
+                },
+            }
+        else:
+            return optimizer
 
 
 if __name__ == '__main__':
