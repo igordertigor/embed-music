@@ -45,6 +45,7 @@ if __name__ == '__main__':
     early_stopping = pl.callbacks.EarlyStopping('val_loss')
     trainer = pl.Trainer(
         accelerator='auto',
+        auto_lr_find=True,
         max_epochs=config.max_epochs,
         callbacks=[checkpoints, early_stopping],
         logger=DVCLiveLogger(

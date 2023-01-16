@@ -74,7 +74,14 @@ class SoundnetGenreClassifier(pl.LightningModule):
             self.parameters(),
             lr=self.learning_rate,
         )
-        return optimizer
+        return {
+            'optimizer': optimizer,
+            'lr_scheduler': {
+                'scheduler': optim.lr_scheduler.ReduceLROnPlateau(optimizer),
+                'monitor': 'val_loss',
+                'frequency': 1,
+            },
+        }
 
 
 if __name__ == '__main__':
