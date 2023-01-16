@@ -58,7 +58,10 @@ if __name__ == '__main__':
         )
     )
     if config.learning_rate == 'auto':
-        trainer.tune(model)
+        trainer.tune(
+            model,
+            train_dataloaders=dl_train,
+        )
     t0 = time.time()
     trainer.fit(
         model=model,
