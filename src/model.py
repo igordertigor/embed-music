@@ -25,7 +25,7 @@ class SoundnetGenreClassifier(pl.LightningModule):
 
         self.learning_rate = learning_rate
         self.best_loss = 0.
-        self.best_loss = float('inf')
+        self.best_accuracy = float('inf')
         self.schedule_lr = schedule_lr
 
         self.soundnet = nn.Sequential(
@@ -85,10 +85,11 @@ class SoundnetGenreClassifier(pl.LightningModule):
             lr=self.learning_rate,
         )
         if self.schedule_lr:
+            lr_scheduler = optim.lr_scheduler.ReduceLROnPlateau(optimizer)
             return {
                 'optimizer': optimizer,
                 'lr_scheduler': {
-                    'scheduler': optim.lr_scheduler.ReduceLROnPlateau(optimizer),
+                    'scheduler': lr_scheduler,
                     'monitor': 'val_loss',
                     'frequency': 1,
                 },
