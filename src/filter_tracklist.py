@@ -16,6 +16,7 @@ def has_audio(track_id: int) -> bool:
             return False
         return sampling_rate == 44100
     else:
+        # print(f'File {fname} does not exist')
         return False
 
 
