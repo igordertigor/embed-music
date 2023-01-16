@@ -58,6 +58,7 @@ if __name__ == '__main__':
         )
     )
     if config.learning_rate == 'auto':
+        model.learning_rate = 0.001
         trainer.tune(
             model,
             train_dataloaders=dl_train,
