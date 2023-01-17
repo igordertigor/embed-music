@@ -47,7 +47,12 @@ if __name__ == '__main__':
         save_last=True,
         every_n_epochs=1,
     )
-    early_stopping = pl.callbacks.EarlyStopping('val_loss', mode='min')
+    early_stopping = pl.callbacks.EarlyStopping(
+        'val_loss',
+        mode='min',
+        verbose=True,
+        patience=25,
+    )
     trainer = pl.Trainer(
         accelerator='auto',
         auto_lr_find=config.auto_lr,
