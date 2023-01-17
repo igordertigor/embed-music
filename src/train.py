@@ -1,4 +1,3 @@
-from typing import Union
 from pydantic import BaseModel
 from yaml import safe_load
 from torch.utils.data import DataLoader
@@ -16,7 +15,9 @@ class Config(BaseModel):
     batch_size: int = 16
     num_workers: int = 3
     max_epochs: int = -1
-    learning_rate: Union[float, str] = 1e-4
+    learning_rate: float = 1e-4
+    auto_lr: bool = False
+    schedule_lr: bool = False
 
 
 if __name__ == '__main__':
@@ -25,7 +26,7 @@ if __name__ == '__main__':
 
     model = SoundnetGenreClassifier(
         config.learning_rate,
-        schedule_lr=config.learning_rate == 'auto',
+        schedule_lr=config.schedule_lr,
     )
     dl_train = DataLoader(
         FMA('data/final/training_set.csv'),
@@ -49,7 +50,7 @@ if __name__ == '__main__':
     early_stopping = pl.callbacks.EarlyStopping('val_loss', mode='min')
     trainer = pl.Trainer(
         accelerator='auto',
-        auto_lr_find=config.learning_rate == 'auto',
+        auto_lr_find=config.auto_lr,
         max_epochs=config.max_epochs,
         callbacks=[checkpoints, early_stopping],
         logger=DVCLiveLogger(
@@ -57,8 +58,7 @@ if __name__ == '__main__':
             dir='experiments/training',
         )
     )
-    if config.learning_rate == 'auto':
-        model.learning_rate = 0.001
+    if config.auto_lr:
         trainer.tune(
             model,
             train_dataloaders=dl_train,
