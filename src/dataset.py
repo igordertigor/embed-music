@@ -18,6 +18,7 @@ class Genre(Enum):
     POP = 10
     ROCK = 12
 
+
 N_TRAINING_EXAMPLES_PER_TRACK: int = 20
 
 
