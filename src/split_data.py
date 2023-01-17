@@ -23,12 +23,14 @@ def split_threefold(
         data,
         test_size=test_set_size,
         stratify=data['genre_top'],
+        random_state=1,
     )
 
     train, valid = train_test_split(
         tmp,
         test_size=valid_set_size/(1-test_set_size),
         stratify=tmp['genre_top'],
+        random_state=2,
     )
     return train, valid, test
 
