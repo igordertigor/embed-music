@@ -45,7 +45,7 @@ if __name__ == '__main__':
         monitor='val_loss',
         dirpath='experiments/training/checkpoints',
         save_last=True,
-        every_n_epochs=1,
+        # every_n_epochs=1,
     )
     early_stopping = pl.callbacks.EarlyStopping(
         'val_loss',

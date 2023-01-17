@@ -69,15 +69,11 @@ class SoundnetGenreClassifier(pl.LightningModule):
         h = self.soundnet(audio)
         y = self.decoder(h.view(h.size(0), -1))
         loss = nn.functional.cross_entropy(y, genres)
-        self.best_loss = min(self.best_loss, loss.item())
         self.log('val_loss', loss)
-        self.log('best_loss', self.best_loss)
 
         pred = y.max(1)
         accuracy = (pred.indices == genres).float().mean()
-        self.best_accuracy = max(self.best_accuracy, accuracy)
         self.log('accuracy', accuracy)
-        self.log('best_accuracy', self.best_accuracy)
 
     def configure_optimizers(self):
         optimizer = optim.Adam(
