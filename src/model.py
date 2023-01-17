@@ -24,8 +24,8 @@ class SoundnetGenreClassifier(pl.LightningModule):
         super().__init__()
 
         self.learning_rate = learning_rate
-        self.best_loss = 0.
-        self.best_accuracy = float('inf')
+        self.best_loss = float('inf')
+        self.best_accuracy = 0.0
         self.schedule_lr = schedule_lr
 
         self.soundnet = nn.Sequential(
