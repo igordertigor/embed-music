@@ -67,11 +67,6 @@ if __name__ == '__main__':
             'experiments/training',
             dir='experiments/training',
         ),
-        ckpt_path=(
-            config.checkpoint
-            if os.path.exists(config.checkpoint)
-            else None
-        )
     )
     if config.auto_lr:
         trainer.tune(
@@ -83,6 +78,11 @@ if __name__ == '__main__':
         model=model,
         train_dataloaders=dl_train,
         val_dataloaders=dl_val,
+        ckpt_path=(
+            config.checkpoint
+            if os.path.exists(config.checkpoint)
+            else None
+        ),
     )
     print('Total training time', time.time() - t0)
 
