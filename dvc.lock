@@ -12,8 +12,8 @@ stages:
       size: 7975472258
       nfiles: 8002
     - path: src/filter_tracklist.py
-      md5: c7684465572612c46b17ffd2e048d67a
-      size: 715
+      md5: 4b25f61fe5a6afab7e10b7f9695fd455
+      size: 763
     outs:
     - path: data/processed/tracks_small.csv
       md5: 2077baca74f42a00e3bf2ca3202cb4a4
@@ -42,58 +42,59 @@ stages:
       md5: 2f769b74ea508de21efe3aa2a85cd85a
       size: 188116
     - path: src/split_data.py
-      md5: 85b6df17c97df36c3e1454fa5bffca01
-      size: 1526
+      md5: e5fd4e5ff0c7dc5dfa08fd483c24c9f8
+      size: 1574
     params:
       params.yaml:
         test_set_size: 0.1
         valid_set_size: 0.1
     outs:
     - path: data/final/testing_set.csv
-      md5: e806697f800d96924b7cefbc8c6b8300
-      size: 18836
+      md5: 67e54511ce1332cfa197e657e7536d41
+      size: 18830
     - path: data/final/training_set.csv
-      md5: 0c215ca6ccb1b060e83d19e8e9dc6146
-      size: 150500
+      md5: 327b899d11ea048dd52fad927bc6d11f
+      size: 150496
     - path: data/final/validation_set.csv
-      md5: 18cee0027ae94af8534dea986e75e506
-      size: 18860
+      md5: 8e3d75c331a9a3e38b25c29323884552
+      size: 18870
   train model:
     cmd: python -m src.train
     deps:
     - path: data/final/training_set.csv
-      md5: 0c215ca6ccb1b060e83d19e8e9dc6146
-      size: 150500
+      md5: 327b899d11ea048dd52fad927bc6d11f
+      size: 150496
     - path: data/final/validation_set.csv
-      md5: 18cee0027ae94af8534dea986e75e506
-      size: 18860
+      md5: 8e3d75c331a9a3e38b25c29323884552
+      size: 18870
     - path: data/raw/fma_small/
       md5: 572ddb300c2bf3bd3076ffbd731b4cb9.dir
       size: 7975472258
       nfiles: 8002
     - path: src/dataset.py
-      md5: dfce718ee0dac6f4ad5547f07ba81d07
-      size: 1748
+      md5: 6db21a6d9f71c9cadb962010ad8a4303
+      size: 1871
     - path: src/model.py
-      md5: 779aa696387158c9458d056815dcea62
-      size: 2457
+      md5: d8ddc87c9cf5f57a1d34f1b17978bb2b
+      size: 3156
     - path: src/train.py
-      md5: 54a1e6caf7c780c33efa03de6c74e3ff
-      size: 1717
+      md5: 90d7509437f706d3a8211849c0e7ff56
+      size: 2508
     params:
       params.yaml:
-        batch_size: 16
+        batch_size: 256
         learning_rate: 1e-05
-        max_epochs: 2
-        num_workers: 3
+        max_epochs: -1
+        num_workers: 44
     outs:
-    - path: data/final/metrics.json
-      md5: eedc158ac7e37a046e5a83ad0beb1da4
-      size: 73
-    - path: logs/training/version_0/
-      md5: d6a19b13d30a46fcd60af19a72d5c47c.dir
-      size: 41566541
+    - path: experiments/training/checkpoints
+      md5: 692ebe68727d6737e1a92e8bc509cb7a.dir
+      size: 83136862
+      nfiles: 2
+    - path: experiments/training/metrics.json
+      md5: eca9ba9e8d170526a9ea85367ae19a24
+      size: 113
+    - path: experiments/training/plots
+      md5: 71b442c7a05010d8b68d98289746356d.dir
+      size: 25685
       nfiles: 3
-    - path: models/model.pt
-      md5: a907559fa6c2be7a858aaf579f983145
-      size: 42129419
