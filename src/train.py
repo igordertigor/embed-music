@@ -74,6 +74,7 @@ if __name__ == '__main__':
             train_dataloaders=dl_train,
         )
     t0 = time.time()
+    print(f'Start training now -- {t0}')
     trainer.fit(
         model=model,
         train_dataloaders=dl_train,

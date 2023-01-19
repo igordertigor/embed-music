@@ -7,5 +7,6 @@ learning_rate: 1e-05
 auto_lr: false
 schedule_lr: false
 schedule_on: val_loss
+checkpoint: ./checkpoint.ckpt
 
 max_epochs: -1
