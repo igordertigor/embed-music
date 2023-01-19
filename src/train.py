@@ -18,6 +18,7 @@ class Config(BaseModel):
     learning_rate: float = 1e-4
     auto_lr: bool = False
     schedule_lr: bool = False
+    schedule_on: str = 'val_loss'
 
 
 if __name__ == '__main__':
@@ -26,7 +27,8 @@ if __name__ == '__main__':
 
     model = SoundnetGenreClassifier(
         config.learning_rate,
-        schedule_lr=config.schedule_lr,
+            schedule_lr=config.schedule_lr,
+        schedule_on=config.schedule_on,
     )
     dl_train = DataLoader(
         FMA('data/final/training_set.csv'),

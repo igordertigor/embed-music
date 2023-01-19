@@ -6,5 +6,6 @@ num_workers: 44
 learning_rate: 1e-5
 auto_lr: false
 schedule_lr: false
+schedule_on: val_loss
 
 max_epochs: -1
