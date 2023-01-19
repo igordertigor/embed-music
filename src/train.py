@@ -1,3 +1,5 @@
+from typing import Optional
+import os
 from pydantic import BaseModel
 from yaml import safe_load
 from torch.utils.data import DataLoader
@@ -18,6 +20,7 @@ class Config(BaseModel):
     learning_rate: float = 1e-4
     auto_lr: bool = False
     schedule_lr: bool = False
+    checkpoint: Optional[str] = None
 
 
 if __name__ == '__main__':
@@ -61,6 +64,11 @@ if __name__ == '__main__':
         logger=DVCLiveLogger(
             'experiments/training',
             dir='experiments/training',
+        ),
+        ckpt_path=(
+            config.checkpoint
+            if os.path.exists(config.checkpoint)
+            else None
         )
     )
     if config.auto_lr:
