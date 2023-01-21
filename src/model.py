@@ -110,6 +110,7 @@ class SoundnetGenreClassifier(pl.LightningModule):
 if __name__ == '__main__':
     import mlem
     model = SoundnetGenreClassifier.load_from_checkpoint('checkpoint.ckpt')
+    model.freeze()
     mlem.api.save(model.soundnet, 'models/soundnet.mlem')
     # d = torch.randn(4, 1, 30000)
     # h = model.soundnet(d)
