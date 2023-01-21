@@ -21,7 +21,12 @@ class SoundnetGenreClassifier(pl.LightningModule):
     schedule_lr: bool
     schedule_on: str
 
-    def __init__(self, learning_rate: float = 1e-4, schedule_lr: bool = False, schedule_on: str = 'val_loss'):
+    def __init__(
+        self,
+        learning_rate: float = 1e-4,
+        schedule_lr: bool = False,
+        schedule_on: str = 'val_loss',
+    ):
         super().__init__()
 
         self.learning_rate = learning_rate
@@ -103,7 +108,9 @@ class SoundnetGenreClassifier(pl.LightningModule):
 
 
 if __name__ == '__main__':
-    model = SoundnetGenreClassifier()
-    d = torch.randn(4, 1, 30000)
-    h = model.soundnet(d)
-    print(model.decoder(h.view(h.size(0), -1)))
+    import mlem
+    model = SoundnetGenreClassifier.load_from_checkpoint('checkpoint.ckpt')
+    mlem.api.save(model.soundnet, 'models/soundnet.mlem')
+    # d = torch.randn(4, 1, 30000)
+    # h = model.soundnet(d)
+    # print(model.decoder(h.view(h.size(0), -1)))
